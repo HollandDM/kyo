@@ -149,6 +149,7 @@ lazy val kyoJVM = project
         `kyo-aeron`.jvm,
         `kyo-schema`.jvm,
         `kyo-http`.jvm,
+        `kyo-s3`.jvm,
         `kyo-flow`.jvm,
         `kyo-caliban`.jvm,
         `kyo-bench`.jvm,
@@ -189,6 +190,7 @@ lazy val kyoJS = project
         `kyo-actor`.js,
         `kyo-schema`.js,
         `kyo-http`.js,
+        `kyo-s3`.js,
         `kyo-flow`.js,
         `kyo-pod`.js
     )
@@ -216,6 +218,7 @@ lazy val kyoNative = project
         `kyo-actor`.native,
         `kyo-schema`.native,
         `kyo-http`.native,
+        `kyo-s3`.native,
         `kyo-flow`.native,
         `kyo-scheduler-zio`.native,
         `kyo-zio`.native,
@@ -592,6 +595,23 @@ lazy val `kyo-http` =
         .nativeSettings(
             `native-settings`,
             `openssl-native-settings`
+        )
+
+lazy val `kyo-s3` =
+    crossProject(JSPlatform, JVMPlatform, NativePlatform)
+        .withoutSuffixFor(JVMPlatform)
+        .crossType(CrossType.Full)
+        .in(file("kyo-s3"))
+        .dependsOn(`kyo-http`)
+        .settings(
+            `kyo-settings`,
+            libraryDependencies += "org.scala-lang.modules" %%% "scala-xml" % "2.3.0"
+        )
+        .jvmSettings(mimaCheck(false))
+        .nativeSettings(`native-settings`, `openssl-native-settings`)
+        .jsSettings(
+            `js-settings`,
+            scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) }
         )
 
 lazy val `kyo-flow` =
