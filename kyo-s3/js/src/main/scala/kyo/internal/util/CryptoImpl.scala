@@ -42,7 +42,7 @@ end CryptoImpl
 @js.native
 @JSImport("crypto", JSImport.Namespace)
 private object CryptoNode extends js.Object:
-    def createHash(algorithm: String): NodeHash               = js.native
+    def createHash(algorithm: String): NodeHash                   = js.native
     def createHmac(algorithm: String, key: Uint8Array): NodeHash = js.native
 
 @js.native

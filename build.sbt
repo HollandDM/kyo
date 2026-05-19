@@ -602,7 +602,7 @@ lazy val `kyo-s3` =
         .withoutSuffixFor(JVMPlatform)
         .crossType(CrossType.Full)
         .in(file("kyo-s3"))
-        .dependsOn(`kyo-http`)
+        .dependsOn(`kyo-http` % "test->test;compile->compile")
         .settings(
             `kyo-settings`,
             libraryDependencies += "org.scala-lang.modules" %%% "scala-xml" % "2.3.0"
